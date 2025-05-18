@@ -1,6 +1,6 @@
 {
 	"name": "amplify-adapter",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "Adapter for SvelteKit v1/v2 + Amplify SSR CI/CD",
 	"license": "MIT",
 	"type": "module",
@@ -35,6 +35,8 @@
 		"release:next": "pnpm publish --tag next"
 	},
 	"dependencies": {
+		"@vercel/nft": "^0.29.3",
+		"glob": "^11.0.2",
 		"rolldown": "^1.0.0-beta.1"
 	},
 	"devDependencies": {
@@ -44,6 +46,7 @@
 		"@sveltejs/vite-plugin-svelte": "^3.0.1",
 		"@types/node": "^20.0.0",
 		"c8": "^8.0.0",
+		"pkg-pr-new": "^0.0.50",
 		"polka": "^1.0.0-next.22",
 		"rimraf": "^5.0.0",
 		"sirv": "^2.0.3",
@@ -52,5 +55,6 @@
 	},
 	"peerDependencies": {
 		"@sveltejs/kit": "^1.0.0 || ^2.0.0"
-	}
+	},
+	"packageManager": "pnpm@10.8.0+sha512.0e82714d1b5b43c74610193cb20734897c1d00de89d0e18420aebc5977fa13d780a9cb05734624e81ebd81cc876cd464794850641c48b9544326b5622ca29971"
 }

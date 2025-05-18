@@ -1,6 +1,9 @@
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { rolldown } from 'rolldown';
+import { glob } from 'glob';
+import { nodeFileTrace } from '@vercel/nft';
+import { join } from 'node:path';
 
 const files = fileURLToPath(new URL('./files', import.meta.url).href);
 /** @type {import('.').default} */
@@ -12,7 +15,7 @@ export default function (opts = {}) {
 		polyfill = true,
 		copyDevNodeModules = false,
 		cleanPackageJson = true,
-		keepPackageDependencies = false,
+		keepPackageDependencies = true,
 		copyNpmrc = true,
 		staticCacheMaxAge = 3600,
 	} = opts;
@@ -148,6 +151,16 @@ export default function (opts = {}) {
 			if (copyNpmrc) {
 				builder.copy('.npmrc', `${computePath}/.npmrc`, {});
 			}
+
+			const globed  = glob.globSync(`${computePath}/**/*.js`)
+			const { fileList } = await nodeFileTrace(globed);
+
+			fileList.forEach((filePath) => {
+				if (!filePath.startsWith(computePath)) {
+					const newFile = join(computePath, filePath)
+					builder.copy(filePath, newFile, {});
+				}
+			})
 
 			if (cleanPackageJson) {
 				const packageJson = JSON.parse(readFileSync('package.json', 'utf8'));
